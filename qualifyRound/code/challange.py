@@ -1,79 +1,71 @@
-from msilib.schema import Class
+import sys
 
 
-file1 = open(r"E:\Coding Competition\Hash Code\qualifyRound\input_data\a_an_example.in.txt")
+class Skill:
+    def __init__(self, name, level):
+        self.name = name
+        self.level = level
+
+
+class Project:
+    def __init__(self, name, duration, score, best_before, skills):
+        self.name = name
+        self.duration = duration
+        self.score = score
+        self.best_before = best_before
+        self.skills = skills
+        self.contributors = []
+
+
+file1 = open(
+    r"E:\Coding Competition\Hash Code\qualifyRound\input_data\a_an_example.in.txt")
 lines = file1.read().splitlines()
 # print(lines)
-contributersNo ,projectsNo=map(int,lines[0].split())
-skill={}
-projects={}
+contributersNo, projectsNo = map(int, lines[0].split())
+skill = {}
+projects = {}
 idx = 1
 for i in range(contributersNo):
-    name,no = lines[idx].split()
-    idx+=1
+    name, no = lines[idx].split()
+    idx += 1
     for j in range(int(no)):
-        sk,level = lines[idx].split()
+        sk, level = lines[idx].split()
         # skill[name]=lines[idx]
-        skill[sk]=skill.get(sk,[])+[name+" "+level]
-        idx+=1
-for k,v in skill.items():
-    skill[k] = sorted(v,key=lambda x: int(x.split()[-1]))
+        skill[sk] = skill.get(sk, [])+[name+" "+level]
+        idx += 1
+for k, v in skill.items():
+    skill[k] = sorted(v, key=lambda x: int(x.split()[-1]))
 
 for i in range(projectsNo):
     r = lines[idx].split()
-    idx+=1
+    idx += 1
     for j in range(int(r[-1])):
-        projects[r[0]]=projects.get(r[0],[])+[lines[idx]]
-        idx+=1
+        # projects[r[0]]=projects.get(r[0],[])+[lines[idx]]
+        print(r, j)
+        # projects[r[0]] = Project()
+        idx += 1
+
+projects.sort(lambda x: x.score-x.duration)
 print(skill)
 print(projects)
 
-from typing import List
+result = []
 
-class Skill:
-    def __init__(self,name:str,level:int) -> None:
-        self.name=name
-        self.level=level
+# def canDo(project:Project):
+#     _list = []
+#     for projReq in project.skills:
+#         ls = skill[projReq.name]
+#         if int(ls[-1].split()[-1]) < projReq.level:
+#             return False
+#         for j in ls:
+#             name, _ = j.split()[-1]
+#             _list.append(name)
+#     project.contributors = _list
+#     return True
 
-class Role:
-    def __init__(self,roll_number:int,skill:Skill) -> None:
-        self.roll_number=roll_number
-        self.skill=skill
-
-class Contributor:
-    def __init__(self,name :str,skills :List(Skill)) -> None:
-        self.name=name
-        self.skills=skills
-        self.isAssigned=False
-
-class Project:
-    def __init__(self,name:str,duration:int,score:int,best_before:int,roles:List(Role)) -> None:
-        self.name=name
-        self.duration=duration
-        self.score=score
-        self.best_before=best_before
-        self.roles=roles
-        self.contributors=[]
-
-
-#Solution
-
-projects : List(Project)=[]
-contributors : List(Contributor)=[]
-
-projects.sort(lambda x:x.score-x.duration) #sorting projects based on priority
-#priority is determined using score-duration -- score should be high, duration should be low
-
-result=[]
-
-def canDo(project:Project):
-    project.contributors=[]
-    pass
-
-while len(projects)>1:  # TODO: should include the case when no project can be done
-    for project in projects:
-        if canDo(project): #canDo() will populate the "project.contributors" list
-            result.append(project)
-            projects.remove(project)
-            break
-    
+# while len(projects)>1:
+#     for project in projects:
+#         if canDo(project):
+#             result.append(project)
+#             projects.remove(project)
+#             break
