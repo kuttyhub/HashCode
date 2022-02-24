@@ -28,3 +28,52 @@ for i in range(projectsNo):
 print(skill)
 print(projects)
 
+from typing import List
+
+class Skill:
+    def __init__(self,name:str,level:int) -> None:
+        self.name=name
+        self.level=level
+
+class Role:
+    def __init__(self,roll_number:int,skill:Skill) -> None:
+        self.roll_number=roll_number
+        self.skill=skill
+
+class Contributor:
+    def __init__(self,name :str,skills :List(Skill)) -> None:
+        self.name=name
+        self.skills=skills
+        self.isAssigned=False
+
+class Project:
+    def __init__(self,name:str,duration:int,score:int,best_before:int,roles:List(Role)) -> None:
+        self.name=name
+        self.duration=duration
+        self.score=score
+        self.best_before=best_before
+        self.roles=roles
+        self.contributors=[]
+
+
+#Solution
+
+projects : List(Project)=[]
+contributors : List(Contributor)=[]
+
+projects.sort(lambda x:x.score-x.duration) #sorting projects based on priority
+#priority is determined using score-duration -- score should be high, duration should be low
+
+result=[]
+
+def canDo(project:Project):
+    project.contributors=[]
+    pass
+
+while len(projects)>1:  # TODO: should include the case when no project can be done
+    for project in projects:
+        if canDo(project): #canDo() will populate the "project.contributors" list
+            result.append(project)
+            projects.remove(project)
+            break
+    
